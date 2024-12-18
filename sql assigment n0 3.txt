@@ -1,0 +1,133 @@
+use employee;
+
+select * from department ;
+select * from location ;
+select * from employees ;
+
+--  distinct values--
+
+SELECT DISTINCT Salary
+FROM EMPLOYEES;
+
+--alias--
+
+SELECT Age AS Employee_Age,
+Salary AS Employee_Salary
+FROM EMPLOYEES;
+
+
+
+-- arithimetic--
+
+SELECT Employee_Name, Salary, 
+Salary * 1.10 AS Net_Salary
+FROM EMPLOYEES;
+
+
+-- comparsion--
+
+SELECT Employee_Name, Salary, Hire_Date
+FROM EMPLOYEES
+WHERE Salary > 50000 AND Hire_Date < '2016-01-01';
+
+--logical--
+
+select employee_name,designation
+from employees
+where designation in ('Data analyst', 'data scientist');
+
+
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE employees
+set designation = 'data scientist'
+where designation is null;
+
+
+SET SQL_SAFE_UPDATES = 0;
+
+
+select employee_name,department_id
+from employees
+where department_id in (1,3,4,9,12);
+
+
+select employee_name,salary
+from employees
+where salary not between 50000 and 80000;
+
+
+SELECT * FROM employees WHERE employee_name LIKE ('A%')
+OR employee_name LIKE ('E%')
+OR employee_name LIKE ('I%')
+OR employee_name LIKE ('O%')
+OR employee_name LIKE ('U%');
+
+
+
+
+
+
+
+select employee_name
+from employees
+where employee_name like ('_sh%');
+
+
+
+
+SELECT Employee_Name, Hire_Date
+FROM Employees
+WHERE Hire_Date > '2019-01-01'
+ORDER BY Hire_Date;
+--orderby--
+
+select employee_name,department_id,salary
+from employees
+order by department_id ASC, Salary desc;
+
+
+select employee_name, salary
+from employees
+order by salary desc
+LIMIT 10;
+
+
+SELECT employee_name, hire_date
+from employees
+where year(hire_date)=2018
+limit 5;
+
+
+Select sum(salary) finace_salary 
+from employees
+where designation like ('finance%');
+
+--minmum--
+
+SELECT MIN(Age) AS Min_Age
+FROM EMPLOYEES;
+
+select location_id,max(salary) location_max from employees
+group by location_id;
+
+
+
+
+SELECT Designation, AVG(Salary) AS Avg_Salary
+FROM EMPLOYEES
+WHERE Designation LIKE ('%Analyst%')
+GROUP BY Designation;
+
+
+
+SELECT Department_Id, COUNT(Employee_Id) AS Employee_Count
+FROM Employees
+GROUP BY Department_Id
+HAVING COUNT(Employee_Id) < 3;
+
+
+
+SELECT Location_Id ,Round(AVG(Age)) AS AVG_AGE FROM EMPLOYEES 
+WHERE Gender ='F' GROUP BY  Location_Id HAVING AVG_AGE < '30';

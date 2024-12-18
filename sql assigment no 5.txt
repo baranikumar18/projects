@@ -1,0 +1,66 @@
+
+assigment no 5 
+
+
+
+use employee;
+
+
+--single row sub qurey---
+
+SELECT * FROM Employees
+WHERE Salary > (SELECT AVG (Salary) FROM Employees);
+
+
+select * from employees
+where salary = (select max(salary) from employees);
+
+
+select * from employees
+where department_id = (select department_id from employees
+where employee_name = "arjun kumar");
+
+
+
+---multi row subqurey--
+
+select * from employees
+where department_id in (select department_id from employees
+where department_id like "%developemnt%");
+
+
+
+--stroed producer-- 1
+
+
+DELIMITER //
+create procedure GetEmployeesByDepartmentName (in deptname varchar(100))
+begin 
+select * from employees
+where department_id = (select department_id from departments 
+where department_id = (deptname));
+end //
+
+DELIMITER ;
+
+call GetEmployeesByDepartmentName('IT');
+call GetEmployeesByDepartmentName('human resources');
+
+
+--stored procedure --2 
+
+DELIMITER //
+
+CREATE PROCEDURE FindEmployeeBirthYearByID (IN EmpID INT , OUT BirthYear INT)
+BEGIN
+SELECT YEAR (BirthDate) INTO BirthYear
+FROM Employees
+WHERE EmployeeID = EmpID;
+
+END //
+
+DELIMITER ;
+
+
+CALL FindEmployeeBirthYearByID (5004,5018,5029, @BirthYear);
+SELECT @Birthyear;

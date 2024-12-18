@@ -1,0 +1,127 @@
+       
+       
+       
+      select * from departments;
+      select * from location;
+       select * from employees;
+       
+       
+       
+       
+       
+       
+       
+     --  assigment no 4 --
+       
+       
+       --joins --inner joins --
+       
+select e.department_id,d.department_id
+from employees as e
+inner join departments as d on e.department_id = d.department_id;
+
+
+-- left join---
+
+
+SELECT Departments.Department_Name,       
+       Count(Employees.Employee_ID) AS total_employee
+FROM 
+       Departments
+LEFT JOIN
+       Employees
+ON
+       Departments.Department_ID = Employees.Department_Id
+GROUP BY
+       Departments.Department_Name; 
+
+
+--right join--
+
+
+
+SELECT 
+    Location.Location, Employees.Employee_Name
+FROM
+    Location
+        RIGHT JOIN
+    Employees ON Location.Location_ID = Employees.Location_ID;
+
+
+--functions--
+
+--find the average --
+
+
+select round (avg(age)) as avarage_age
+from employees;
+
+
+select employee_name,
+salary,
+ceil(SQRT(SALARY)) as bonus
+from employees;
+
+
+--bulit in string function---
+
+select location,
+left(location,3) as firt_three_charc
+from location;
+
+
+select employee_name,
+designation,
+concat(employee_name, '_', designation)as name_with_desigantion
+from employee;
+
+ --built in date time functions---
+ 
+ select employee_name,
+ year(hire_date) as hire_year
+ from employees;
+ 
+ 
+ select employee_name,
+ DATEDIFF(current_date,hire_date) as employee_working_days
+ from employees;
+
+
+
+
+SELECT Employee_Name,
+       DATE_FORMAT(Hire_Date, '%d-%m-%y') AS Formatted_Hire_Date
+FROM Employees; 
+       
+
+
+select employee_name,
+date_add(HIRE_DATE, INTERVAL 3 MONTH) AS EMPLOYEE_CONFROMATION_DATE
+FROM EMPLOYEES;
+       
+       
+       DEFI
+       
+       
+       
+Delimiter //
+
+create function employeecountbylocation(location_name varchar(30))
+RETURNS integer
+deterministic
+reads sql data
+BEGIN
+declare EMP_COUNT INT;
+SELECT count(*)
+INTO emp_count
+FROM Employees
+JOIN Location ON Employees.Location_ID = Location.Location_ID
+WHERE Location.Location = LocationName;
+
+RETURN emp_count;
+END //
+
+Delimiter ;
+
+
+SELECT 'Bangalore' AS Location, EmployeeCountByLocation('Bangalore') AS Employee_Count;

@@ -1,0 +1,56 @@
+CREATE DATABASE EMPLOYEE;
+
+USE EMPLOYEE;
+
+CREATE TABLE DEPARTMENTS (
+Department_Id INT,
+Department_Name VARCHAR(100)
+);
+
+CREATE TABLE LOCATION (
+Location_Id INT,
+Location VARCHAR(30)
+);
+
+CREATE TABLE EMPLOYEES (
+Employee_Id INT,
+Employee_Name VARCHAR(50),
+Gender ENUM('M','F'),
+Age INT,
+Hire_Date DATE,
+Designation VARCHAR(100),
+Department_Id INT,
+Location_Id INT,
+Salary DECIMAL(10,2)
+);
+
+
+ALTER TABLE EMPLOYEES
+ADD COLUMN Email VARCHAR(30);
+
+
+ALTER TABLE EMPLOYEES
+MODIFY COLUMN Designation VARCHAR(300);
+
+
+ALTER TABLE EMPLOYEES
+DROP COLUMN Age;
+
+ALTER TABLE EMPLOYEES
+RENAME COLUMN Hire_Date to Date_of_Joining;
+
+
+Alter table departments
+ rename to Departments_info;
+ 
+ 
+ ALTER TABLE LOCATION
+ RENAME TO LOCATIONS;
+ 
+ 
+ truncate table employees;
+ 
+ 
+ Drop table employees;
+
+drop database employee;

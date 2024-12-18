@@ -1,0 +1,55 @@
+assignment no 6
+
+
+
+
+       assigment no 6
+       
+       
+USE EMPLOYEE;
+
+DELIMITER //
+
+CREATE TRIGGER before_insert_employee_salary
+BEFORE INSERT ON Employees
+FOR EACH ROW
+BEGIN
+ IF NEW.Salary IS NULL OR NEW.Salary=0 THEN
+ SET NEW.Salary =(SELECT AVG(salary) FROM employees);
+ END IF;
+ 
+ END //
+ DELIMITER ;
+ 
+ ALTER TABLE Employees
+ MODIFY COLUMN Employee_Id INT NOT NULL AUTO_INCREMENT; 
+ 
+ 
+ INSERT INTO Employees (Employee_Name, Hire_Date) 
+ VALUES ('John Doe', '2023-01-15');
+ 
+SELECT * FROM EMPLOYEES;
+
+
+DELIMITER //
+
+CREATE TRIGGER After_Delete_Employee_Protect
+BEFORE DELETE ON Employees
+FOR EACH ROW
+BEGIN
+  DECLARE Most_Recent_Year YEAR;
+  SET Most_Recent_Year = (SELECT MAX(YEAR(Hire_Date)) FROM Employees);
+  
+  IF YEAR(OLD.Hire_Date) = Most_Recent_Year THEN
+  SIGNAL SQLSTATE '40000'
+  SET MESSAGE_TEXT = 'Deletion not allowed: The employee joined in the most recent year.';
+  END IF;
+  
+END //
+
+DELIMITER ;  
+
+DESCRIBE Employees;
+
+DELETE FROM Employees WHERE Employee_ID = 100;
+
